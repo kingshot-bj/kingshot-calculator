@@ -53,3 +53,43 @@ calculatorEngine.registerTool({
     }, { silk:0, thread:0, bp:0, pt:0 });
   }
 });
+calculatorEngine.registerTool({
+  id: 'equipment',
+  name: '装備進化素材計算',
+  icon: '⚔️',
+  description: 'レアリティ＋★方式',
+
+  fields: [
+    {
+      id: 'current',
+      label: '現在',
+      type: 'select',
+      options: OPTIONS
+    },
+    {
+      id: 'target',
+      label: '目標',
+      type: 'select',
+      options: OPTIONS
+    }
+  ],
+
+  calculate: (values) => {
+    const current = parseInt(values.current);
+    const target = parseInt(values.target);
+
+    if (!current || !target || target <= current) {
+      return { silk:0, thread:0, bp:0, pt:0 };
+    }
+
+    const slice = EQUIPMENT_MASTER.slice(current, target);
+
+    return slice.reduce((acc,row)=>{
+      acc.silk += row.silk;
+      acc.thread += row.thread;
+      acc.bp += row.bp;
+      acc.pt += row.pt;
+      return acc;
+    }, { silk:0, thread:0, bp:0, pt:0 });
+  }
+});
