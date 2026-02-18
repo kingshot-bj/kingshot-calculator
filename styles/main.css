@@ -880,3 +880,10 @@ body {
 .hidden {
   display: none !important;
 }
+/* ===== 装備レアリティカラー ===== */
+
+.rarity-green { color: #2ecc71 !important; font-weight: 600; }
+.rarity-blue { color: #3498db !important; font-weight: 600; }
+.rarity-purple { color: #9b59b6 !important; font-weight: 600; }
+.rarity-gold { color: #f39c12 !important; font-weight: 600; }
+.rarity-red { color: #e74c3c !important; font-weight: 600; }
