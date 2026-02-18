@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lord Gear Calculator Pro</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/dark-mode.css">
+</head>
+<body>
+  <div id="app">
+    <!-- ナビゲーション -->
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <div class="brand-content">
+            <img src="assets/mascot.png" alt="Mascot" class="mascot-logo">
+            <div class="brand-text">
+              <h1>⚔️ Lord Gear Calculator Pro</h1>
+              <p class="subtitle">複数ゲーム対応の素材計算ツール</p>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-controls">
+          <button id="theme-toggle" class="btn-icon" title="ダークモード切り替え">
+            <span class="icon">🌙</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- タブナビゲーション -->
+    <div class="tabs-container">
+      <div class="tabs" id="calculator-tabs">
+        <!-- タブはJavaScriptで動的に生成される -->
+      </div>
+    </div>
+
+    <!-- メインコンテンツ -->
+    <main class="main-content">
+      <div class="container">
+        <!-- マスコット（浮遊アニメーション） -->
+        <div class="mascot-floating" id="mascot-floating">
+          <img src="assets/mascot.png" alt="Mascot" class="mascot-character">
+        </div>
+        <!-- 計算ツールのコンテンツはここに動的に挿入される -->
+        <div id="calculator-content"></div>
+      </div>
+    </main>
+
+    <!-- サイドパネル（履歴・設定） -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h3>計算履歴</h3>
+        <button class="btn-close" id="sidebar-close">✕</button>
+      </div>
+      <div class="sidebar-content" id="history-content">
+        <!-- 履歴がここに表示される -->
+      </div>
+    </aside>
+
+    <!-- フッター -->
+    <footer class="footer">
+      <p>&copy; 2026 Lord Gear Calculator Pro | 複数ツール対応プラットフォーム</p>
+    </footer>
+  </div>
+
+  <!-- スクリプト -->
+  <script src="js/core/calculator-engine.js"></script>
+  <script src="js/core/storage-manager.js"></script>
+  <script src="js/core/ui-manager.js"></script>
+  <script src="js/tools/equipment-calculator.js"></script>
+  <script src="js/tools/jewel-calculator.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

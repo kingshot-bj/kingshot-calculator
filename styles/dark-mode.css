@@ -1,0 +1,190 @@
+/* ============================================
+   Dark Mode Styles
+   ============================================ */
+
+html.dark-mode {
+  --primary: #3b82f6;
+  --primary-dark: #1e40af;
+  --secondary: #94a3b8;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --light: #0f172a;
+  --dark: #1e293b;
+  --border: #334155;
+  --text: #f1f5f9;
+  --text-light: #cbd5e1;
+}
+
+html.dark-mode body {
+  background-color: #0f172a;
+  color: #f1f5f9;
+}
+
+html.dark-mode .navbar {
+  background: #1e293b;
+  border-bottom-color: #334155;
+}
+
+html.dark-mode .tabs-container {
+  background: #1e293b;
+  border-bottom-color: #334155;
+}
+
+html.dark-mode .tab {
+  color: #cbd5e1;
+}
+
+html.dark-mode .tab:hover {
+  background-color: #334155;
+  color: #3b82f6;
+}
+
+html.dark-mode .tab.active {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+}
+
+html.dark-mode .calculator-form {
+  background: #1e293b;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+html.dark-mode .form-control {
+  background: #334155;
+  border-color: #475569;
+  color: #f1f5f9;
+}
+
+html.dark-mode .form-control:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+html.dark-mode .form-group label {
+  color: #f1f5f9;
+}
+
+html.dark-mode .form-help {
+  color: #cbd5e1;
+}
+
+html.dark-mode .btn-secondary {
+  background-color: #334155;
+  color: #f1f5f9;
+  border-color: #475569;
+}
+
+html.dark-mode .btn-secondary:hover {
+  background-color: #475569;
+}
+
+html.dark-mode .result-card {
+  background: #1e293b;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+html.dark-mode .result-table tbody tr {
+  border-bottom-color: #334155;
+}
+
+html.dark-mode .result-label {
+  color: #cbd5e1;
+}
+
+html.dark-mode .result-value {
+  color: #60a5fa;
+}
+
+html.dark-mode .result-actions {
+  background-color: #334155;
+  border-top-color: #475569;
+}
+
+html.dark-mode .sidebar {
+  background: #1e293b;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+html.dark-mode .sidebar-header {
+  border-bottom-color: #334155;
+}
+
+html.dark-mode .history-item {
+  border-bottom-color: #334155;
+}
+
+html.dark-mode .history-item:hover {
+  background-color: #334155;
+}
+
+html.dark-mode .history-time {
+  color: #cbd5e1;
+}
+
+html.dark-mode .notification {
+  background: #1e293b;
+  color: #f1f5f9;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+html.dark-mode .notification-success {
+  border-left-color: #10b981;
+  background: linear-gradient(to right, rgba(16, 185, 129, 0.2), #1e293b);
+}
+
+html.dark-mode .notification-error {
+  border-left-color: #ef4444;
+  background: linear-gradient(to right, rgba(239, 68, 68, 0.2), #1e293b);
+}
+
+html.dark-mode .tool-description {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
+html.dark-mode .result-header {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
+html.dark-mode .empty-state {
+  color: #cbd5e1;
+}
+
+html.dark-mode .btn-icon:hover {
+  background-color: #334155;
+}
+
+html.dark-mode .btn-close {
+  color: #cbd5e1;
+}
+
+html.dark-mode .btn-close:hover {
+  color: #f1f5f9;
+}
+
+html.dark-mode .mascot-logo {
+  filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.3));
+}
+
+html.dark-mode .mascot-character {
+  filter: drop-shadow(0 8px 20px rgba(59, 130, 246, 0.2));
+}
+
+/* Scrollbar styling for dark mode */
+html.dark-mode ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html.dark-mode ::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+html.dark-mode ::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 4px;
+}
+
+html.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
