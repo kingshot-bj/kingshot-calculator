@@ -214,3 +214,26 @@ const equipmentToolConfig = {
 };
 
 calculatorEngine.registerTool('equipment', equipmentToolConfig);
+// ===============================
+// レアリティ色付け制御
+// ===============================
+
+document.addEventListener("change", function (e) {
+  if (e.target.tagName !== "SELECT") return;
+
+  const text = e.target.options[e.target.selectedIndex]?.text || "";
+
+  e.target.classList.remove(
+    "rarity-green",
+    "rarity-blue",
+    "rarity-purple",
+    "rarity-gold",
+    "rarity-red"
+  );
+
+  if (text.includes("グッド")) e.target.classList.add("rarity-green");
+  else if (text.includes("レア")) e.target.classList.add("rarity-blue");
+  else if (text.includes("エピック")) e.target.classList.add("rarity-purple");
+  else if (text.includes("レジェンド")) e.target.classList.add("rarity-gold");
+  else if (text.includes("神話")) e.target.classList.add("rarity-red");
+});
