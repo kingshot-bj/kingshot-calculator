@@ -138,4 +138,3 @@ calculatorEngine.registerTool('my-tool', MY_TOOL_CONFIG);
 
 ---
 
-**Made with ❤️ by Manus**
