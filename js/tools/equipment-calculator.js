@@ -1,4 +1,4 @@
-/**
+  /**
  * Equipment Calculator - 装備強化素材計算ツール
  */
 
@@ -56,6 +56,52 @@ const EQUIPMENT_MASTER = [
   {id:50, key:"神話T4-3", silk:475000, thread:4750, bp:990, pt:0},
 ];
 
+// ---------------------------
+// 表示用：key を「色 + T + ★」に変換
+// ---------------------------
+const TIER_JP_MAP = {
+  "グッド": "緑",
+  "レア": "青",
+  "エピック": "紫",
+  "レジェンド": "金",
+  "神話": "赤",
+};
+
+/**
+ * "レジェンドT3-2" -> { tierJp:"金", t:"T3", star:2 }
+ * "グッド-1" -> { tierJp:"緑", t:null, star:1 }
+ */
+function parseEquipKey(key) {
+  // (グッド|レア|エピック|レジェンド|神話)(T数字)?-星数字
+  const m = String(key).match(/^(グッド|レア|エピック|レジェンド|神話)(T\d+)?-(\d+)$/);
+  if (!m) return { tierJp: key, t: null, star: null };
+
+  const tierBase = m[1];
+  const t = m[2] || null;
+  const star = Number(m[3]);
+
+  return {
+    tierJp: TIER_JP_MAP[tierBase] || tierBase,
+    t,
+    star,
+  };
+}
+
+function formatEquipLabel(masterRow) {
+  const { tierJp, t, star } = parseEquipKey(masterRow.key);
+  if (star == null) return masterRow.key; // 想定外は元表示
+  // 表示例： "金 T3 ★2"
+  return `${tierJp}${t ? ` ${t}` : ""} ★${star}`;
+}
+
+function buildEquipmentOptions() {
+  // 見た目を段階順にしたいので、元のEQUIPMENT_MASTER順でOK
+  return EQUIPMENT_MASTER.map(m => ({
+    value: m.id,
+    label: formatEquipLabel(m),
+  }));
+}
+
 // 部位定義
 const EQUIPMENT_PARTS = [
   { id: 'hat', label: '帽子' },
@@ -66,19 +112,21 @@ const EQUIPMENT_PARTS = [
   { id: 'staff', label: '杖' },
 ];
 
-// フィールド定義
+// フィールド定義（Lv表記ではなく、色/T/★表記の選択にする）
+const EQUIPMENT_OPTIONS = buildEquipmentOptions();
+
 const EQUIPMENT_FIELDS = EQUIPMENT_PARTS.flatMap(part => [
   {
     name: `${part.id}_current`,
-    label: `${part.label} - 現在`,
+    label: `${part.label} - 現在（色/T/★）`,
     type: 'select',
-    options: EQUIPMENT_MASTER.map(m => ({ value: m.id, label: m.key })),
+    options: EQUIPMENT_OPTIONS,
   },
   {
     name: `${part.id}_target`,
-    label: `${part.label} - 目標`,
+    label: `${part.label} - 目標（色/T/★）`,
     type: 'select',
-    options: EQUIPMENT_MASTER.map(m => ({ value: m.id, label: m.key })),
+    options: EQUIPMENT_OPTIONS,
   },
 ]).concat([
   { name: 'have_silk', label: '所持絹', type: 'number', default: 0 },
@@ -91,7 +139,7 @@ const EQUIPMENT_FIELDS = EQUIPMENT_PARTS.flatMap(part => [
  */
 const equipmentToolConfig = {
   name: '装備計算',
-  description: '6部位の装備強化に必要な素材を計算します',
+  description: '6部位の装備強化に必要な素材を計算します（色/T/★ベース）',
   icon: '⚔️',
   masterData: EQUIPMENT_MASTER,
   idField: 'id',
@@ -153,7 +201,7 @@ const equipmentToolConfig = {
       const targetId = Number(inputs[`${part.id}_target`]);
 
       if (targetId && currentId && targetId <= currentId) {
-        errors.push(`${part.label}: 目標は現在より大きくしてください`);
+        errors.push(`${part.label}: 目標は現在より先の段階にしてください`);
       }
     });
 
