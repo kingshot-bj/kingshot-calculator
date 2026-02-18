@@ -1,3 +1,5 @@
+console.log("equipment loaded OK");
+
 /**
  * Equipment Calculator - 完全安定版
  * 二重registerなし
