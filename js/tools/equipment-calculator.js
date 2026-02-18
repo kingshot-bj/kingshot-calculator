@@ -237,3 +237,46 @@ document.addEventListener("change", function (e) {
   else if (text.includes("レジェンド")) e.target.classList.add("rarity-gold");
   else if (text.includes("神話")) e.target.classList.add("rarity-red");
 });
+
+// ===============================
+// 星ボタン化
+// ===============================
+
+function convertStarSelectToButtons() {
+  document.querySelectorAll('select[name*="_star"]').forEach(select => {
+
+    // すでに変換済みならスキップ
+    if (select.dataset.converted) return;
+
+    select.style.display = "none";
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "star-button-group";
+
+    [0,1,2,3].forEach(star => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = "★" + star;
+      btn.className = "star-btn";
+
+      btn.addEventListener("click", () => {
+        select.value = star;
+        select.dispatchEvent(new Event("change"));
+
+        wrapper.querySelectorAll(".star-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+
+      if (select.value == star) {
+        btn.classList.add("active");
+      }
+
+      wrapper.appendChild(btn);
+    });
+
+    select.parentNode.insertBefore(wrapper, select.nextSibling);
+    select.dataset.converted = "true";
+  });
+}
+
+document.addEventListener("DOMContentLoaded", convertStarSelectToButtons);
