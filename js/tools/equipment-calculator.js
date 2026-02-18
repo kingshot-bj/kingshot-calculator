@@ -1,8 +1,14 @@
-  /**
+/**
  * Equipment Calculator - 装備強化素材計算ツール
+ * レアリティ＋Tier 1プルダウン
+ * 星 別プルダウン
+ * ゲーム準拠表記
  */
 
-// マスターデータ（元のデータから移行）
+// ===============================
+// マスターデータ
+// ===============================
+
 const EQUIPMENT_MASTER = [
   {id:1, key:"グッド-0", silk:1500, thread:15, bp:0, pt:1125},
   {id:2, key:"グッド-1", silk:3800, thread:40, bp:0, pt:1875},
@@ -56,53 +62,52 @@ const EQUIPMENT_MASTER = [
   {id:50, key:"神話T4-3", silk:475000, thread:4750, bp:990, pt:0},
 ];
 
-// ---------------------------
-// 表示用：key を「色 + T + ★」に変換
-// ---------------------------
-const TIER_JP_MAP = {
-  "グッド": "緑",
-  "レア": "青",
-  "エピック": "紫",
-  "レジェンド": "金",
-  "神話": "赤",
-};
+// ===============================
+// レアリティ抽出
+// ===============================
 
-/**
- * "レジェンドT3-2" -> { tierJp:"金", t:"T3", star:2 }
- * "グッド-1" -> { tierJp:"緑", t:null, star:1 }
- */
-function parseEquipKey(key) {
-  // (グッド|レア|エピック|レジェンド|神話)(T数字)?-星数字
-  const m = String(key).match(/^(グッド|レア|エピック|レジェンド|神話)(T\d+)?-(\d+)$/);
-  if (!m) return { tierJp: key, t: null, star: null };
-
-  const tierBase = m[1];
-  const t = m[2] || null;
-  const star = Number(m[3]);
+function parseKey(key) {
+  const m = key.match(/^(グッド|レア|エピック|レジェンド|神話)(T\d+)?-(\d)$/);
+  if (!m) return null;
 
   return {
-    tierJp: TIER_JP_MAP[tierBase] || tierBase,
-    t,
-    star,
+    rarity: m[1],
+    tier: m[2] || "",
+    star: Number(m[3])
   };
 }
 
-function formatEquipLabel(masterRow) {
-  const { tierJp, t, star } = parseEquipKey(masterRow.key);
-  if (star == null) return masterRow.key; // 想定外は元表示
-  // 表示例： "金 T3 ★2"
-  return `${tierJp}${t ? ` ${t}` : ""} ★${star}`;
+// ===============================
+// レアリティ＋Tier 一覧生成
+// ===============================
+
+const RARITY_TIER_LIST = [];
+const STAR_LIST = [0,1,2,3];
+
+EQUIPMENT_MASTER.forEach(row => {
+  const parsed = parseKey(row.key);
+  if (!parsed) return;
+
+  const label = parsed.rarity + parsed.tier;
+  if (!RARITY_TIER_LIST.includes(label)) {
+    RARITY_TIER_LIST.push(label);
+  }
+});
+
+// ===============================
+// ID取得関数
+// ===============================
+
+function getIdFromSelection(rarityTier, star) {
+  const key = `${rarityTier}-${star}`;
+  const found = EQUIPMENT_MASTER.find(m => m.key === key);
+  return found ? found.id : null;
 }
 
-function buildEquipmentOptions() {
-  // 見た目を段階順にしたいので、元のEQUIPMENT_MASTER順でOK
-  return EQUIPMENT_MASTER.map(m => ({
-    value: m.id,
-    label: formatEquipLabel(m),
-  }));
-}
-
+// ===============================
 // 部位定義
+// ===============================
+
 const EQUIPMENT_PARTS = [
   { id: 'hat', label: '帽子' },
   { id: 'decoration', label: '装飾' },
@@ -112,53 +117,78 @@ const EQUIPMENT_PARTS = [
   { id: 'staff', label: '杖' },
 ];
 
-// フィールド定義（Lv表記ではなく、色/T/★表記の選択にする）
-const EQUIPMENT_OPTIONS = buildEquipmentOptions();
+// ===============================
+// フィールド生成
+// ===============================
 
-const EQUIPMENT_FIELDS = EQUIPMENT_PARTS.flatMap(part => [
-  {
-    name: `${part.id}_current`,
-    label: `${part.label} - 現在（色/T/★）`,
-    type: 'select',
-    options: EQUIPMENT_OPTIONS,
-  },
-  {
-    name: `${part.id}_target`,
-    label: `${part.label} - 目標（色/T/★）`,
-    type: 'select',
-    options: EQUIPMENT_OPTIONS,
-  },
-]).concat([
-  { name: 'have_silk', label: '所持絹', type: 'number', default: 0 },
-  { name: 'have_thread', label: '所持金の糸', type: 'number', default: 0 },
-  { name: 'have_bp', label: '所持設計図', type: 'number', default: 0 },
-]);
+const EQUIPMENT_FIELDS = [];
 
-/**
- * 装備計算ツール設定
- */
+EQUIPMENT_PARTS.forEach(part => {
+
+  EQUIPMENT_FIELDS.push({
+    name: `${part.id}_current_rarity`,
+    label: `${part.label} - 現在レアリティ`,
+    type: 'select',
+    options: RARITY_TIER_LIST.map(r => ({ value: r, label: r }))
+  });
+
+  EQUIPMENT_FIELDS.push({
+    name: `${part.id}_current_star`,
+    label: `${part.label} - 現在★`,
+    type: 'select',
+    options: STAR_LIST.map(s => ({ value: s, label: `★${s}` }))
+  });
+
+  EQUIPMENT_FIELDS.push({
+    name: `${part.id}_target_rarity`,
+    label: `${part.label} - 目標レアリティ`,
+    type: 'select',
+    options: RARITY_TIER_LIST.map(r => ({ value: r, label: r }))
+  });
+
+  EQUIPMENT_FIELDS.push({
+    name: `${part.id}_target_star`,
+    label: `${part.label} - 目標★`,
+    type: 'select',
+    options: STAR_LIST.map(s => ({ value: s, label: `★${s}` }))
+  });
+
+});
+
+EQUIPMENT_FIELDS.push({ name: 'have_silk', label: '所持絹', type: 'number', default: 0 });
+EQUIPMENT_FIELDS.push({ name: 'have_thread', label: '所持金の糸', type: 'number', default: 0 });
+EQUIPMENT_FIELDS.push({ name: 'have_bp', label: '所持設計図', type: 'number', default: 0 });
+
+// ===============================
+// 計算設定
+// ===============================
+
 const equipmentToolConfig = {
   name: '装備計算',
-  description: '6部位の装備強化に必要な素材を計算します（色/T/★ベース）',
+  description: '装備強化素材計算（レアリティ＋★方式）',
   icon: '⚔️',
   masterData: EQUIPMENT_MASTER,
   idField: 'id',
   fields: EQUIPMENT_FIELDS,
 
-  /**
-   * 計算ロジック
-   */
   calculateFn: (inputs, tool) => {
+
     let needSilk = 0, needThread = 0, needBP = 0, gainPT = 0;
 
-    // 各部位の計算
     EQUIPMENT_PARTS.forEach(part => {
-      const currentId = Number(inputs[`${part.id}_current`]);
-      const targetId = Number(inputs[`${part.id}_target`]);
+
+      const currentId = getIdFromSelection(
+        inputs[`${part.id}_current_rarity`],
+        inputs[`${part.id}_current_star`]
+      );
+
+      const targetId = getIdFromSelection(
+        inputs[`${part.id}_target_rarity`],
+        inputs[`${part.id}_target_star`]
+      );
 
       if (!currentId || !targetId || targetId <= currentId) return;
 
-      // currentIdからtargetIdまでの素材を合算
       for (let id = currentId + 1; id <= targetId; id++) {
         const master = tool.masterDataMap.get(id);
         if (master) {
@@ -168,89 +198,19 @@ const equipmentToolConfig = {
           gainPT += master.pt;
         }
       }
+
     });
-
-    const haveSilk = Number(inputs.have_silk) || 0;
-    const haveThread = Number(inputs.have_thread) || 0;
-    const haveBP = Number(inputs.have_bp) || 0;
-
-    const lackSilk = needSilk - haveSilk;
-    const lackThread = needThread - haveThread;
-    const lackBP = needBP - haveBP;
 
     return {
       needSilk,
       needThread,
       needBP,
       gainPT,
-      lackSilk: Math.max(0, lackSilk),
-      lackThread: Math.max(0, lackThread),
-      lackBP: Math.max(0, lackBP),
-      isSufficient: lackSilk <= 0 && lackThread <= 0 && lackBP <= 0,
+      lackSilk: Math.max(0, needSilk - (Number(inputs.have_silk) || 0)),
+      lackThread: Math.max(0, needThread - (Number(inputs.have_thread) || 0)),
+      lackBP: Math.max(0, needBP - (Number(inputs.have_bp) || 0)),
     };
-  },
-
-  /**
-   * 入力値検証
-   */
-  validateFn: (inputs, tool) => {
-    const errors = [];
-
-    EQUIPMENT_PARTS.forEach(part => {
-      const currentId = Number(inputs[`${part.id}_current`]);
-      const targetId = Number(inputs[`${part.id}_target`]);
-
-      if (targetId && currentId && targetId <= currentId) {
-        errors.push(`${part.label}: 目標は現在より先の段階にしてください`);
-      }
-    });
-
-    const haveSilk = Number(inputs.have_silk);
-    const haveThread = Number(inputs.have_thread);
-    const haveBP = Number(inputs.have_bp);
-
-    if (isNaN(haveSilk) || haveSilk < 0) {
-      errors.push('所持絹は0以上の数値を入力してください');
-    }
-    if (isNaN(haveThread) || haveThread < 0) {
-      errors.push('所持金の糸は0以上の数値を入力してください');
-    }
-    if (isNaN(haveBP) || haveBP < 0) {
-      errors.push('所持設計図は0以上の数値を入力してください');
-    }
-
-    return {
-      valid: errors.length === 0,
-      errors,
-    };
-  },
-
-  /**
-   * カスタムエクスポート
-   */
-  exportFn: (result, format) => {
-    if (format === 'text') {
-      return `
-=== 装備計算結果 ===
-時刻: ${result.timestamp}
-
-必要素材:
-  絹: ${result.needSilk.toLocaleString('ja-JP')}
-  金の糸: ${result.needThread.toLocaleString('ja-JP')}
-  設計図: ${result.needBP.toLocaleString('ja-JP')}
-  獲得評価pt: ${result.gainPT.toLocaleString('ja-JP')}
-
-不足素材:
-  絹: ${result.lackSilk.toLocaleString('ja-JP')}
-  金の糸: ${result.lackThread.toLocaleString('ja-JP')}
-  設計図: ${result.lackBP.toLocaleString('ja-JP')}
-
-素材充足: ${result.isSufficient ? '✓ 充足' : '✗ 不足'}
-      `.trim();
-    }
-    return null;
-  },
+  }
 };
 
-// ツールを登録
 calculatorEngine.registerTool('equipment', equipmentToolConfig);
