@@ -887,3 +887,39 @@ body {
 .rarity-purple { color: #9b59b6 !important; font-weight: 600; }
 .rarity-gold { color: #f39c12 !important; font-weight: 600; }
 .rarity-red { color: #e74c3c !important; font-weight: 600; }
+/* ===== レアリティ色分け ===== */
+
+/* グッド（緑） */
+select option[value*="グッド"],
+select option[value*="グリーン"] {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+/* レア（青） */
+select option[value*="レア"],
+select option[value*="ブルー"] {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+/* エピック（紫） */
+select option[value*="エピック"],
+select option[value*="パープル"] {
+  color: #a855f7;
+  font-weight: 600;
+}
+
+/* レジェンド（ゴールド） */
+select option[value*="レジェンド"],
+select option[value*="ゴールド"] {
+  color: #f59e0b;
+  font-weight: 700;
+}
+
+/* 神話（赤） */
+select option[value*="神話"],
+select option[value*="レッド"] {
+  color: #ef4444;
+  font-weight: 700;
+}
