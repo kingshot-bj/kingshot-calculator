@@ -947,3 +947,47 @@ select option[value*="レッド"] {
   border-color: #b8860b;
   color: #000;
 }
+
+/* ===== レアリティselect強化 ===== */
+
+select[name*="_rarity"] {
+  height: 48px;
+  border-radius: 12px;
+  border: 2px solid #ccc;
+  font-weight: 700;
+}
+
+/* グッド */
+select[name*="_rarity"].rarity-good {
+  background: #e6f7ed;
+  border-color: #22c55e;
+  color: #0f7b32;
+}
+
+/* レア */
+select[name*="_rarity"].rarity-rare {
+  background: #e6f0ff;
+  border-color: #3b82f6;
+  color: #0b4ea2;
+}
+
+/* エピック */
+select[name*="_rarity"].rarity-epic {
+  background: #f1e6ff;
+  border-color: #a855f7;
+  color: #6b2fb8;
+}
+
+/* レジェンド */
+select[name*="_rarity"].rarity-legend {
+  background: #fff6d6;
+  border-color: #f59e0b;
+  color: #b8860b;
+}
+
+/* 神話 */
+select[name*="_rarity"].rarity-myth {
+  background: #ffe6e6;
+  border-color: #ef4444;
+  color: #b30000;
+}
