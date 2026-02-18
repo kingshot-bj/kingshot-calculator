@@ -280,3 +280,24 @@ function convertStarSelectToButtons() {
 }
 
 document.addEventListener("DOMContentLoaded", convertStarSelectToButtons);
+// ========================================
+// レアリティ強調処理（色更新）
+// ========================================
+
+function applyRarityStyle(selectEl) {
+  if (!selectEl) return;
+
+  const value = selectEl.value;
+  const text = selectEl.options[selectEl.selectedIndex]?.text || "";
+
+  // レアリティ判定
+  let rarity = "";
+
+  if (text.includes("神話")) rarity = "神話";
+  else if (text.includes("レジェンド")) rarity = "レジェンド";
+  else if (text.includes("エピック")) rarity = "エピック";
+  else if (text.includes("レア")) rarity = "レア";
+  else if (text.includes("グッド")) rarity = "グッド";
+
+  selectEl.setAttribute("data-rarity", rarity);
+}
