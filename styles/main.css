@@ -1,7 +1,6 @@
-/* ============================================
-   Lord Gear Calculator Pro - Main Styles
-   完全安定版
-============================================ */
+/* ==================================================
+   Lord Gear Calculator Pro - Stable Layout Version
+================================================== */
 
 * {
   margin: 0;
@@ -12,55 +11,72 @@
 :root {
   --primary: #2563eb;
   --primary-dark: #1e40af;
-  --success: #10b981;
-  --danger: #ef4444;
-  --light: #f8fafc;
-  --dark: #1e293b;
-  --border: #e2e8f0;
+  --border: #e5e7eb;
+  --bg: #f8fafc;
+  --card: #ffffff;
   --text: #1e293b;
-  --text-light: #64748b;
   --radius: 10px;
-  --transition: all 0.2s ease;
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--light);
+  background: var(--bg);
   color: var(--text);
 }
 
-/* =========================
-   Navbar
-========================= */
+/* ================= NAVBAR ================= */
 
 .navbar {
   background: white;
   border-bottom: 1px solid var(--border);
-  padding: 16px;
+  padding: 12px 20px;
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mascot-logo {
+  width: 40px;
+  height: auto;
 }
 
 .navbar h1 {
   font-size: 1.2rem;
 }
 
-/* =========================
-   Layout
-========================= */
+/* ================= MAIN ================= */
 
 .main-content {
   padding: 20px;
 }
 
-.calculator-form {
-  background: white;
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+/* ================= CARD ================= */
+
+.calculator-form,
+.result-card,
+.batch-set-panel {
+  background: var(--card);
   padding: 20px;
   border-radius: var(--radius);
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
 }
 
-/* =========================
-   Form
-========================= */
+/* ================= FORM ================= */
 
 .form-group {
   margin-bottom: 16px;
@@ -68,18 +84,16 @@ body {
 
 label {
   font-weight: 600;
-  margin-bottom: 6px;
   display: block;
+  margin-bottom: 6px;
 }
 
 select,
 input {
   width: 100%;
-  padding: 12px;
+  padding: 8px;
   border-radius: var(--radius);
-  border: 2px solid var(--border);
-  font-size: 1rem;
-  transition: var(--transition);
+  border: 1px solid var(--border);
 }
 
 select:focus,
@@ -88,17 +102,14 @@ input:focus {
   border-color: var(--primary);
 }
 
-/* =========================
-   Buttons
-========================= */
+/* ================= BUTTON ================= */
 
 .btn {
-  padding: 12px;
+  padding: 8px 16px;
   border-radius: var(--radius);
   border: none;
-  font-weight: 600;
   cursor: pointer;
-  transition: var(--transition);
+  font-weight: 600;
 }
 
 .btn-primary {
@@ -106,76 +117,64 @@ input:focus {
   color: white;
 }
 
+.btn-secondary {
+  background: #e2e8f0;
+}
+
 .btn-primary:hover {
   background: var(--primary-dark);
 }
 
-/* =========================
-   Result
-========================= */
+/* ================= RESULT ================= */
 
 .result-card {
   margin-top: 20px;
-  background: white;
+}
+
+/* ================= MASCOT FIX ================= */
+
+.mascot-floating {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 120px;
+  z-index: 10;
+}
+
+.mascot-character {
+  width: 100%;
+  height: auto;
+}
+
+/* ================= TABS ================= */
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  padding: 10px 20px;
+}
+
+.tab {
+  padding: 8px 14px;
   border-radius: var(--radius);
-  padding: 16px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  background: #e2e8f0;
+  cursor: pointer;
+  border: none;
 }
 
-/* ===================================================
-   🔥 レアリティ強調（最終安定版）
-   equipment-calculator.js の data-rarity と一致
-=================================================== */
-
-select {
-  font-weight: 700;
-  border-radius: 12px;
+.tab.active {
+  background: var(--primary);
+  color: white;
 }
 
-/* グッド */
-select[data-rarity="グッド"] {
-  background: #f3f4f6;
-  color: #111;
-  border: 2px solid #9ca3af;
-}
-
-/* レア */
-select[data-rarity="レア"] {
-  background: #2563eb;
-  color: #fff;
-  border: 2px solid #1d4ed8;
-}
-
-/* エピック */
-select[data-rarity="エピック"] {
-  background: #7c3aed;
-  color: #fff;
-  border: 2px solid #6d28d9;
-}
-
-/* レジェンド */
-select[data-rarity="レジェンド"] {
-  background: #f59e0b;
-  color: #111;
-  border: 2px solid #d97706;
-  font-weight: 800;
-}
-
-/* 神話 */
-select[data-rarity="神話"] {
-  background: linear-gradient(90deg,#dc2626,#7f1d1d);
-  color: #fff;
-  border: 2px solid #991b1b;
-  font-weight: 900;
-  box-shadow: 0 0 8px rgba(220,38,38,0.6);
-}
-
-/* =========================
-   Responsive
-========================= */
+/* ================= RESPONSIVE ================= */
 
 @media (max-width: 768px) {
-  .calculator-form {
-    padding: 16px;
+  .container {
+    padding: 0 10px;
+  }
+
+  .mascot-floating {
+    width: 80px;
   }
 }
