@@ -1,6 +1,6 @@
-/* ============================================
-   Lord Gear Calculator Pro - Main Styles
-   ============================================ */
+/* ==================================================
+   Lord Gear Calculator Pro - Stable Layout Version
+================================================== */
 
 * {
   margin: 0;
@@ -9,874 +9,172 @@
 }
 
 :root {
-  /* Colors */
   --primary: #2563eb;
   --primary-dark: #1e40af;
-  --secondary: #64748b;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ef4444;
-  --light: #f8fafc;
-  --dark: #1e293b;
-  --border: #e2e8f0;
+  --border: #e5e7eb;
+  --bg: #f8fafc;
+  --card: #ffffff;
   --text: #1e293b;
-  --text-light: #64748b;
-
-  /* Spacing */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-
-  /* Border Radius */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-
-  /* Transitions */
-  --transition: all 0.3s ease;
-}
-
-html {
-  scroll-behavior: smooth;
+  --radius: 10px;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--light);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
 }
 
-/* ============================================
-   Navigation
-   ============================================ */
+/* ================= NAVBAR ================= */
 
 .navbar {
   background: white;
   border-bottom: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  padding: 12px 20px;
 }
 
 .navbar-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: var(--spacing-lg) var(--spacing-md);
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-}
-
-.navbar-brand {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-lg);
 }
 
 .brand-content {
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: 10px;
 }
 
 .mascot-logo {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-  animation: mascot-bounce 3s ease-in-out infinite;
+  width: 40px;
+  height: auto;
 }
 
-.brand-text h1 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: var(--spacing-xs);
+.navbar h1 {
+  font-size: 1.2rem;
 }
 
-.brand-text .subtitle {
-  font-size: 0.875rem;
-  color: var(--text-light);
-}
-
-.navbar-controls {
-  display: flex;
-  gap: var(--spacing-md);
-}
-
-.btn-icon {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: var(--spacing-sm);
-  border-radius: var(--radius-md);
-  transition: var(--transition);
-}
-
-.btn-icon:hover {
-  background-color: var(--light);
-}
-
-/* ============================================
-   Tabs
-   ============================================ */
-
-.tabs-container {
-  background: white;
-  border-bottom: 1px solid var(--border);
-  overflow-x: auto;
-}
-
-.tabs {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  gap: 0;
-}
-
-.tab {
-  background: none;
-  border: none;
-  padding: var(--spacing-md) var(--spacing-lg);
-  font-size: 1rem;
-  cursor: pointer;
-  border-bottom: 3px solid transparent;
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  color: var(--text-light);
-}
-
-.tab:hover {
-  color: var(--primary);
-  background-color: var(--light);
-}
-
-.tab.active {
-  color: var(--primary);
-  border-bottom-color: var(--primary);
-}
-
-.tab-icon {
-  font-size: 1.25rem;
-}
-
-/* ============================================
-   Main Content
-   ============================================ */
+/* ================= MAIN ================= */
 
 .main-content {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: var(--spacing-xl) var(--spacing-md);
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: var(--spacing-xl);
+  padding: 20px;
 }
 
 .container {
-  flex: 1;
+  max-width: 900px;
+  margin: auto;
 }
 
-/* ============================================
-   Forms
-   ============================================ */
+/* ================= CARD ================= */
 
-.tool-description {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: var(--spacing-lg);
-  border-radius: var(--radius-lg);
-  margin-bottom: var(--spacing-xl);
+.calculator-form,
+.result-card,
+.batch-set-panel {
+  background: var(--card);
+  padding: 20px;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
 }
 
-.tool-description p {
-  margin: 0;
-  font-size: 1.1rem;
-}
-
-.calculator-form {
-  background: white;
-  padding: var(--spacing-xl);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  margin-bottom: var(--spacing-xl);
-}
-
-.form-fields {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-xl);
-}
+/* ================= FORM ================= */
 
 .form-group {
-  display: flex;
-  flex-direction: column;
+  margin-bottom: 16px;
 }
 
-.form-group label {
+label {
   font-weight: 600;
-  margin-bottom: var(--spacing-sm);
-  color: var(--text);
-  font-size: 0.95rem;
+  display: block;
+  margin-bottom: 6px;
 }
 
-.form-control {
-  padding: var(--spacing-md);
+select,
+input {
+  width: 100%;
+  padding: 8px;
+  border-radius: var(--radius);
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  font-size: 1rem;
-  transition: var(--transition);
-  font-family: inherit;
 }
 
-.form-control:focus {
+select:focus,
+input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-.form-help {
-  font-size: 0.85rem;
-  color: var(--text-light);
-  margin-top: var(--spacing-xs);
-}
-
-.button-group {
-  display: flex;
-  gap: var(--spacing-md);
-  justify-content: center;
-}
-
-/* ============================================
-   Buttons
-   ============================================ */
+/* ================= BUTTON ================= */
 
 .btn {
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: 8px 16px;
+  border-radius: var(--radius);
   border: none;
-  border-radius: var(--radius-md);
-  font-size: 1rem;
-  font-weight: 600;
   cursor: pointer;
-  transition: var(--transition);
-  font-family: inherit;
+  font-weight: 600;
 }
 
 .btn-primary {
-  background-color: var(--primary);
+  background: var(--primary);
   color: white;
-}
-
-.btn-primary:hover {
-  background-color: var(--primary-dark);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
 }
 
 .btn-secondary {
-  background-color: var(--light);
-  color: var(--text);
-  border: 1px solid var(--border);
+  background: #e2e8f0;
 }
 
-.btn-secondary:hover {
-  background-color: var(--border);
+.btn-primary:hover {
+  background: var(--primary-dark);
 }
 
-.btn-small {
-  padding: var(--spacing-sm) var(--spacing-md);
-  font-size: 0.875rem;
-}
-
-.btn-close {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--text-light);
-  padding: var(--spacing-sm);
-}
-
-.btn-close:hover {
-  color: var(--text);
-}
-
-/* ============================================
-   Results
-   ============================================ */
-
-.result-container {
-  margin-top: var(--spacing-xl);
-}
+/* ================= RESULT ================= */
 
 .result-card {
-  background: white;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  overflow: hidden;
+  margin-top: 20px;
 }
 
-.result-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: var(--spacing-lg);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.result-header h3 {
-  margin: 0;
-}
-
-.result-time {
-  font-size: 0.875rem;
-  opacity: 0.9;
-}
-
-.result-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.result-table tbody tr {
-  border-bottom: 1px solid var(--border);
-}
-
-.result-table tbody tr:last-child {
-  border-bottom: none;
-}
-
-.result-label {
-  padding: var(--spacing-md) var(--spacing-lg);
-  font-weight: 600;
-  color: var(--text-light);
-  width: 40%;
-}
-
-.result-value {
-  padding: var(--spacing-md) var(--spacing-lg);
-  color: var(--primary);
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.result-actions {
-  display: flex;
-  gap: var(--spacing-md);
-  padding: var(--spacing-lg);
-  background-color: var(--light);
-  border-top: 1px solid var(--border);
-}
-
-.result-actions .btn {
-  flex: 1;
-}
-
-/* ============================================
-   Sidebar
-   ============================================ */
-
-.sidebar {
-  background: white;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  padding: var(--spacing-lg);
-  max-height: 600px;
-  overflow-y: auto;
-}
-
-.sidebar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--spacing-lg);
-  border-bottom: 1px solid var(--border);
-  padding-bottom: var(--spacing-md);
-}
-
-.sidebar-header h3 {
-  margin: 0;
-  font-size: 1rem;
-}
-
-.sidebar-content {
-  font-size: 0.9rem;
-}
-
-.empty-state {
-  color: var(--text-light);
-  text-align: center;
-  padding: var(--spacing-lg);
-}
-
-.history-list {
-  list-style: none;
-}
-
-.history-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--spacing-md);
-  border-bottom: 1px solid var(--border);
-  transition: var(--transition);
-}
-
-.history-item:hover {
-  background-color: var(--light);
-}
-
-.history-info {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-}
-
-.history-time {
-  font-size: 0.8rem;
-  color: var(--text-light);
-}
-
-.history-tool {
-  font-weight: 600;
-  color: var(--primary);
-}
-
-.history-actions {
-  display: flex;
-  gap: var(--spacing-sm);
-}
-
-.history-actions .btn-icon {
-  padding: var(--spacing-xs);
-  font-size: 1rem;
-}
-
-/* ============================================
-   Notifications
-   ============================================ */
-
-.notification {
-  position: fixed;
-  bottom: -100px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: white;
-  padding: var(--spacing-md) var(--spacing-lg);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg);
-  transition: var(--transition);
-  z-index: 1000;
-  max-width: 400px;
-}
-
-.notification.show {
-  bottom: var(--spacing-lg);
-}
-
-.notification-success {
-  border-left: 4px solid var(--success);
-  background: linear-gradient(to right, rgba(16, 185, 129, 0.1), white);
-}
-
-.notification-error {
-  border-left: 4px solid var(--danger);
-  background: linear-gradient(to right, rgba(239, 68, 68, 0.1), white);
-}
-
-/* ============================================
-   Footer
-   ============================================ */
-
-.footer {
-  background: var(--dark);
-  color: white;
-  text-align: center;
-  padding: var(--spacing-xl) var(--spacing-md);
-  margin-top: var(--spacing-2xl);
-}
-
-.footer p {
-  margin: 0;
-  opacity: 0.8;
-}
-
-/* ============================================
-   Responsive Design
-   ============================================ */
-
-@media (max-width: 1024px) {
-  .main-content {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    max-height: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .navbar-container {
-    flex-direction: column;
-    gap: var(--spacing-md);
-    text-align: center;
-  }
-
-  .brand-content {
-    flex-direction: column;
-    gap: var(--spacing-sm);
-  }
-
-  .mascot-logo {
-    width: 50px;
-    height: 50px;
-  }
-
-  .brand-text h1 {
-    font-size: 1.25rem;
-  }
-
-  .mascot-floating {
-    width: 80px;
-    height: 80px;
-    bottom: 20px;
-    right: 20px;
-  }
-
-  .tabs {
-    overflow-x: auto;
-  }
-
-  .tab {
-    padding: var(--spacing-md);
-    font-size: 0.9rem;
-  }
-
-  .tab-name {
-    display: none;
-  }
-
-  .main-content {
-    padding: var(--spacing-md);
-  }
-
-  .form-fields {
-    grid-template-columns: 1fr;
-  }
-
-  .button-group {
-    flex-direction: column;
-  }
-
-  .button-group .btn {
-    width: 100%;
-  }
-
-  .batch-inputs {
-    grid-template-columns: 1fr;
-  }
-
-  .batch-button-group {
-    flex-direction: column;
-  }
-
-  .quick-buttons {
-    justify-content: center;
-  }
-
-  .result-label {
-    width: 50%;
-  }
-
-  .result-actions {
-    flex-direction: column;
-  }
-
-  .result-actions .btn {
-    width: 100%;
-  }
-
-  .sidebar {
-    position: fixed;
-    right: -100%;
-    top: 0;
-    width: 80%;
-    max-width: 300px;
-    height: 100vh;
-    border-radius: 0;
-    z-index: 200;
-    transition: var(--transition);
-  }
-
-  .sidebar.open {
-    right: 0;
-  }
-
-  .notification {
-    max-width: calc(100% - var(--spacing-lg));
-  }
-}
-
-@media (max-width: 480px) {
-  .brand-text h1 {
-    font-size: 1.1rem;
-  }
-
-  .brand-text .subtitle {
-    display: none;
-  }
-
-  .mascot-logo {
-    width: 40px;
-    height: 40px;
-  }
-
-  .mascot-floating {
-    width: 70px;
-    height: 70px;
-    bottom: 15px;
-    right: 15px;
-  }
-
-  .tab {
-    padding: var(--spacing-sm);
-  }
-
-  .calculator-form {
-    padding: var(--spacing-md);
-  }
-
-  .form-fields {
-    gap: var(--spacing-md);
-  }
-
-  .result-label,
-  .result-value {
-    padding: var(--spacing-sm);
-    font-size: 0.9rem;
-  }
-}
-
-/* ============================================
-   Mascot Animations
-   ============================================ */
-
-@keyframes mascot-bounce {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-8px) rotate(-2deg);
-  }
-  75% {
-    transform: translateY(-8px) rotate(2deg);
-  }
-}
-
-@keyframes mascot-float {
-  0%, 100% {
-    transform: translateY(0) scale(1);
-    opacity: 0.3;
-  }
-  50% {
-    transform: translateY(-20px) scale(1.05);
-    opacity: 0.5;
-  }
-}
-
-@keyframes mascot-pulse {
-  0%, 100% {
-    filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.3));
-  }
-  50% {
-    filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.6));
-  }
-}
+/* ================= MASCOT FIX ================= */
 
 .mascot-floating {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 20px;
+  right: 20px;
   width: 120px;
-  height: 120px;
-  z-index: 50;
-  animation: mascot-float 4s ease-in-out infinite;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.mascot-floating:hover {
-  animation: mascot-pulse 1s ease-in-out infinite;
+  z-index: 10;
 }
 
 .mascot-character {
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
-  transition: var(--transition);
+  height: auto;
 }
 
-.mascot-floating:hover .mascot-character {
-  transform: scale(1.1) rotate(5deg);
-}
+/* ================= TABS ================= */
 
-/* ============================================
-   Animations
-   ============================================ */
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.result-card {
-  animation: slideIn 0.3s ease;
-}
-
-/* ============================================
-   Batch Set UI
-   ============================================ */
-
-.batch-set-panel {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(16, 185, 129, 0.05));
-  border: 2px solid var(--primary);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-lg);
-  margin-bottom: var(--spacing-lg);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
-}
-
-.batch-controls h3 {
-  margin: 0 0 var(--spacing-md) 0;
-  color: var(--primary);
-  font-size: 1rem;
+.tabs {
   display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
+  gap: 10px;
+  padding: 10px 20px;
 }
 
-.batch-controls h3::before {
-  content: '⚡';
-  font-size: 1.2rem;
-}
-
-.batch-inputs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
-}
-
-.batch-input-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
-
-.batch-input-group label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.batch-input {
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  font-size: 1rem;
-  transition: var(--transition);
-}
-
-.batch-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.batch-button-group {
-  display: flex;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
-}
-
-.batch-button-group .btn {
-  flex: 1;
-  padding: var(--spacing-md);
-  font-weight: 600;
-}
-
-.quick-buttons {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  flex-wrap: wrap;
-}
-
-.quick-buttons span {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text);
-  margin-right: var(--spacing-sm);
-}
-
-.btn-small {
-  padding: var(--spacing-sm) var(--spacing-md);
-  font-size: 0.85rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  background: white;
-  color: var(--text);
+.tab {
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  background: #e2e8f0;
   cursor: pointer;
-  transition: var(--transition);
+  border: none;
 }
 
-.btn-small:hover {
-  background: var(--light);
-  border-color: var(--primary);
-  color: var(--primary);
+.tab.active {
+  background: var(--primary);
+  color: white;
 }
 
-/* ============================================
-   Utilities
-   ============================================ */
+/* ================= RESPONSIVE ================= */
 
-.text-center {
-  text-align: center;
-}
+@media (max-width: 768px) {
+  .container {
+    padding: 0 10px;
+  }
 
-.mt-lg {
-  margin-top: var(--spacing-lg);
-}
-
-.mb-lg {
-  margin-bottom: var(--spacing-lg);
-}
-
-.hidden {
-  display: none !important;
+  .mascot-floating {
+    width: 80px;
+  }
 }
