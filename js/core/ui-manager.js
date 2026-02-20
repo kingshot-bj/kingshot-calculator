@@ -486,14 +486,26 @@ class UIManager {
 
     this.currentResult = { toolId, ...result };
 
+    // ラベルマッピング
+    const labelMap = {
+      needSilk: '必要献上品の絹',
+      needThread: '必要金の糸',
+      needBP: '必要設計図',
+      gainPT: '獲得評価pt',
+      lackSilk: '不足献上品の絹',
+      lackThread: '不足金の糸',
+      lackBP: '不足設計図',
+      isSufficient: '素材充足',
+    };
+
     const html = `
       <div class="result-card">
         <h3>計算結果</h3>
         <div class="result-details">
           ${Object.entries(result).map(([key, value]) => `
             <div class="result-row">
-              <span class="result-label">${key}:</span>
-              <span class="result-value">${value}</span>
+              <span class="result-label">${labelMap[key] || key}:</span>
+              <span class="result-value">${typeof value === 'boolean' ? (value ? '✓ 充足' : '✗ 不足') : value}</span>
             </div>
           `).join('')}
         </div>
