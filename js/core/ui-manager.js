@@ -343,11 +343,6 @@ class UIManager {
 
     contentDiv.appendChild(form);
 
-    const resultDiv = document.createElement('div');
-    resultDiv.className = 'result-container';
-    resultDiv.id = `result-${toolId}`;
-    contentDiv.appendChild(resultDiv);
-
     this.renderRecentHistory(toolId);
   }
 
@@ -481,8 +476,9 @@ class UIManager {
    * 計算結果を表示
    */
   renderResult(toolId, result) {
-    const resultDiv = document.getElementById(`result-${toolId}`);
-    if (!resultDiv) return;
+    // 右側パネルに結果を表示
+    const layoutRight = document.querySelector('.layout-right');
+    if (!layoutRight) return;
 
     this.currentResult = { toolId, ...result };
 
@@ -516,7 +512,7 @@ class UIManager {
       </div>
     `;
 
-    resultDiv.innerHTML = html;
+    layoutRight.innerHTML = html;
   }
 
   /**

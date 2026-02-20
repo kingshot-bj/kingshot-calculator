@@ -38,13 +38,20 @@
 
     <!-- メインコンテンツ -->
     <main class="main-content">
-      <div class="container">
-        <!-- マスコット（浮遊アニメーション） -->
-        <div class="mascot-floating" id="mascot-floating">
-          <img src="assets/mascot.png" alt="Mascot" class="mascot-character">
+      <div class="container-layout">
+        <!-- 左側：計算フォーム -->
+        <div class="layout-left">
+          <!-- マスコット（浮遊アニメーション） -->
+          <div class="mascot-floating" id="mascot-floating">
+            <img src="assets/mascot.png" alt="Mascot" class="mascot-character">
+          </div>
+          <!-- 計算ツールのコンテンツ -->
+          <div id="calculator-content"></div>
         </div>
-        <!-- 計算ツールのコンテンツはここに動的に挿入される -->
-        <div id="calculator-content"></div>
+        <!-- 右側：計算結果 -->
+        <div class="layout-right">
+          <!-- 計算結果はここに表示される -->
+        </div>
       </div>
     </main>
 
