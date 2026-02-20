@@ -1,9 +1,8 @@
 console.log("equipment loaded OK");
 
 /**
- * Equipment Calculator - 完全安定版
- * 二重registerなし
- * 色強調対応
+ * Equipment Calculator - Engine仕様完全準拠版
+ * registerTool(toolId, config) 形式対応
  */
 
 // ==============================
@@ -46,49 +45,51 @@ const OPTIONS = EQUIPMENT_MASTER.map(m => ({
 }));
 
 // ==============================
-// 計算ツール登録（1回だけ）
+// ツール登録（Engine仕様準拠）
 // ==============================
 
-calculatorEngine.registerTool({
-  id: 'equipment',
-  name: '装備進化素材計算',
-  icon: '⚔️',
-  description: 'レアリティ＋★方式で素材を計算',
+calculatorEngine.registerTool(
+  'equipment',
+  {
+    name: '装備進化素材計算',
+    icon: '⚔️',
+    description: 'レアリティ＋★方式で素材を計算',
 
-  fields: [
-    {
-      id: 'current',
-      label: '現在',
-      type: 'select',
-      options: OPTIONS
-    },
-    {
-      id: 'target',
-      label: '目標',
-      type: 'select',
-      options: OPTIONS
+    fields: [
+      {
+        id: 'current',
+        label: '現在',
+        type: 'select',
+        options: OPTIONS
+      },
+      {
+        id: 'target',
+        label: '目標',
+        type: 'select',
+        options: OPTIONS
+      }
+    ],
+
+    calculateFn: (values) => {
+      const current = parseInt(values.current);
+      const target = parseInt(values.target);
+
+      if (!current || !target || target <= current) {
+        return { silk:0, thread:0, bp:0, pt:0 };
+      }
+
+      const slice = EQUIPMENT_MASTER.slice(current, target);
+
+      return slice.reduce((acc,row)=>{
+        acc.silk += row.silk;
+        acc.thread += row.thread;
+        acc.bp += row.bp;
+        acc.pt += row.pt;
+        return acc;
+      }, { silk:0, thread:0, bp:0, pt:0 });
     }
-  ],
-
-  calculate: (values) => {
-    const current = parseInt(values.current);
-    const target = parseInt(values.target);
-
-    if (!current || !target || target <= current) {
-      return { silk:0, thread:0, bp:0, pt:0 };
-    }
-
-    const slice = EQUIPMENT_MASTER.slice(current, target);
-
-    return slice.reduce((acc,row)=>{
-      acc.silk += row.silk;
-      acc.thread += row.thread;
-      acc.bp += row.bp;
-      acc.pt += row.pt;
-      return acc;
-    }, { silk:0, thread:0, bp:0, pt:0 });
   }
-});
+);
 
 // ==============================
 // レアリティ色強調
@@ -107,14 +108,12 @@ function applyRarityStyle(selectEl) {
   selectEl.setAttribute("data-rarity", rarity);
 }
 
-// change時
 document.addEventListener("change", function(e){
   if(e.target.tagName === "SELECT"){
     applyRarityStyle(e.target);
   }
 });
 
-// 初期ロード時
 window.addEventListener("DOMContentLoaded", ()=>{
   document.querySelectorAll("select").forEach(el=>{
     applyRarityStyle(el);
