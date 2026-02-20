@@ -1,10 +1,5 @@
 console.log("equipment loaded OK");
 
-/**
- * Equipment Calculator - Engine仕様完全準拠版
- * registerTool(toolId, config) 形式対応
- */
-
 // ==============================
 // マスターデータ
 // ==============================
@@ -31,8 +26,17 @@ const EQUIPMENT_MASTER = [
 ];
 
 // ==============================
-// 表示ラベル生成
+// 部位定義（復活）
 // ==============================
+
+const EQUIPMENT_PARTS = [
+  { id: 'weapon', label: '武器' },
+  { id: 'helmet', label: '帽子' },
+  { id: 'armor', label: '鎧' },
+  { id: 'pants', label: 'ズボン' },
+  { id: 'ring', label: '指輪' },
+  { id: 'boots', label: '靴' },
+];
 
 function formatLabel(row){
   const [rarity, star] = row.key.split("-");
@@ -45,77 +49,53 @@ const OPTIONS = EQUIPMENT_MASTER.map(m => ({
 }));
 
 // ==============================
-// ツール登録（Engine仕様準拠）
+// フィールド自動生成（6部位）
 // ==============================
 
-calculatorEngine.registerTool(
-  'equipment',
+const EQUIPMENT_FIELDS = EQUIPMENT_PARTS.flatMap(part => [
   {
-    name: '装備進化素材計算',
-    icon: '⚔️',
-    description: 'レアリティ＋★方式で素材を計算',
+    name: `${part.id}_current`,
+    label: `${part.label} 現在`,
+    type: 'select',
+    options: OPTIONS
+  },
+  {
+    name: `${part.id}_target`,
+    label: `${part.label} 目標`,
+    type: 'select',
+    options: OPTIONS
+  }
+]);
 
-    fields: [
-      {
-        id: 'current',
-        label: '現在',
-        type: 'select',
-        options: OPTIONS
-      },
-      {
-        id: 'target',
-        label: '目標',
-        type: 'select',
-        options: OPTIONS
-      }
-    ],
+// ==============================
+// ツール登録
+// ==============================
 
-    calculateFn: (values) => {
-      const current = parseInt(values.current);
-      const target = parseInt(values.target);
+calculatorEngine.registerTool('equipment', {
+  name: '装備進化素材計算',
+  icon: '⚔️',
+  description: '6部位合計の素材を計算します',
+  fields: EQUIPMENT_FIELDS,
 
-      if (!current || !target || target <= current) {
-        return { silk:0, thread:0, bp:0, pt:0 };
-      }
+  calculateFn: (values) => {
+    let total = { silk:0, thread:0, bp:0, pt:0 };
+
+    EQUIPMENT_PARTS.forEach(part => {
+      const current = parseInt(values[`${part.id}_current`]);
+      const target = parseInt(values[`${part.id}_target`]);
+
+      if (!current || !target || target <= current) return;
 
       const slice = EQUIPMENT_MASTER.slice(current, target);
 
-      return slice.reduce((acc,row)=>{
-        acc.silk += row.silk;
-        acc.thread += row.thread;
-        acc.bp += row.bp;
-        acc.pt += row.pt;
-        return acc;
-      }, { silk:0, thread:0, bp:0, pt:0 });
-    }
+      slice.forEach(row => {
+        total.silk += row.silk;
+        total.thread += row.thread;
+        total.bp += row.bp;
+        total.pt += row.pt;
+      });
+    });
+
+    return total;
   }
-);
-
-// ==============================
-// レアリティ色強調
-// ==============================
-
-function applyRarityStyle(selectEl) {
-  const text = selectEl.options[selectEl.selectedIndex]?.text || "";
-  let rarity = "";
-
-  if (text.includes("神話")) rarity = "mythic";
-  else if (text.includes("レジェンド")) rarity = "legend";
-  else if (text.includes("エピック")) rarity = "epic";
-  else if (text.includes("レア")) rarity = "rare";
-  else if (text.includes("グッド")) rarity = "good";
-
-  selectEl.setAttribute("data-rarity", rarity);
-}
-
-document.addEventListener("change", function(e){
-  if(e.target.tagName === "SELECT"){
-    applyRarityStyle(e.target);
-  }
-});
-
-window.addEventListener("DOMContentLoaded", ()=>{
-  document.querySelectorAll("select").forEach(el=>{
-    applyRarityStyle(el);
-  });
 });
