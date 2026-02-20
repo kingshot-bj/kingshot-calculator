@@ -81,7 +81,7 @@ const EQUIPMENT_FIELDS = EQUIPMENT_PARTS.flatMap(part => [
     options: EQUIPMENT_MASTER.map(m => ({ value: m.id, label: m.key })),
   },
 ]).concat([
-  { name: 'have_silk', label: '所持絹', type: 'number', default: 0 },
+  { name: 'have_silk', label: '所持献上品の絹', type: 'number', default: 0 },
   { name: 'have_thread', label: '所持金の糸', type: 'number', default: 0 },
   { name: 'have_bp', label: '所持設計図', type: 'number', default: 0 },
 ]);
@@ -187,13 +187,13 @@ const equipmentToolConfig = {
 時刻: ${result.timestamp}
 
 必要素材:
-  絹: ${result.needSilk.toLocaleString('ja-JP')}
+  献上品の絹: ${result.needSilk.toLocaleString('ja-JP')}
   金の糸: ${result.needThread.toLocaleString('ja-JP')}
   設計図: ${result.needBP.toLocaleString('ja-JP')}
   獲得評価pt: ${result.gainPT.toLocaleString('ja-JP')}
 
 不足素材:
-  絹: ${result.lackSilk.toLocaleString('ja-JP')}
+  献上品の絹: ${result.lackSilk.toLocaleString('ja-JP')}
   金の糸: ${result.lackThread.toLocaleString('ja-JP')}
   設計図: ${result.lackBP.toLocaleString('ja-JP')}
 
