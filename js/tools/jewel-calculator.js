@@ -1,5 +1,5 @@
 /**
- * Jewel Calculator - 完全修正版（エラー修正済）
+ * Jewel Calculator - UIManager完全互換版
  */
 
 const JEWEL_MASTER = [
@@ -35,25 +35,30 @@ const JEWEL_SLOTS = [
   { id: 3, label: '③' },
 ];
 
-const JEWEL_FIELDS = JEWEL_PARTS.flatMap(part =>
-  JEWEL_SLOTS.flatMap(slot => [
-    {
-      id: `${part.id}_${slot.id}_current`,
+const JEWEL_FIELDS = [];
+
+JEWEL_PARTS.forEach(part => {
+  JEWEL_SLOTS.forEach(slot => {
+    JEWEL_FIELDS.push({
+      name: `${part.id}_${slot.id}_current`,
       label: `${part.label} ${slot.label} - 現在`,
       type: 'select',
-      options: JEWEL_MASTER.map(m => ({ value: m.lv, label: `Lv${m.lv}` })),
-    },
-    {
-      id: `${part.id}_${slot.id}_target`,
+      options: JEWEL_MASTER.map(m => ({ value: m.lv, label: `Lv${m.lv}` }))
+    });
+
+    JEWEL_FIELDS.push({
+      name: `${part.id}_${slot.id}_target`,
       label: `${part.label} ${slot.label} - 目標`,
       type: 'select',
-      options: JEWEL_MASTER.map(m => ({ value: m.lv, label: `Lv${m.lv}` })),
-    },
-  ])
-).concat([
-  { id: 'have_guides', label: '所持ハンドブック', type: 'number', default: 0 },
-  { id: 'have_designs', label: '所持図面', type: 'number', default: 0 },
-]);
+      options: JEWEL_MASTER.map(m => ({ value: m.lv, label: `Lv${m.lv}` }))
+    });
+  });
+});
+
+JEWEL_FIELDS.push(
+  { name: 'have_guides', label: '所持ハンドブック', type: 'number', default: 0 },
+  { name: 'have_designs', label: '所持図面', type: 'number', default: 0 }
+);
 
 calculatorEngine.registerTool(
   'jewel',
@@ -71,9 +76,8 @@ calculatorEngine.registerTool(
 
       JEWEL_PARTS.forEach(part => {
         JEWEL_SLOTS.forEach(slot => {
-
-          let currentLv = Number(inputs[`${part.id}_${slot.id}_current`] || 0);
-          let targetLv = Number(inputs[`${part.id}_${slot.id}_target`] || 0);
+          const currentLv = Number(inputs[`${part.id}_${slot.id}_current`] || 0);
+          const targetLv = Number(inputs[`${part.id}_${slot.id}_target`] || 0);
 
           if (targetLv <= currentLv) return;
 
