@@ -97,13 +97,20 @@ body {
   min-height: calc(100vh - 200px);
 }
 
-/* モバイル優先：1列レイアウト */
+/* モバイル儯先：縦−2列レイアウト */
 .container-layout {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
   max-width: 100%;
   margin: auto;
+}
+
+/* フォームフィールドを縦−2列に */
+.form-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
 .layout-left {
@@ -140,7 +147,12 @@ body {
 /* ================= FORM ================= */
 
 .form-group {
-  margin-bottom: 14px;
+  margin-bottom: 0;
+}
+
+/* 数値入力フィールドは全幅 */
+.form-group input[type="number"] {
+  grid-column: 1 / -1;
 }
 
 label {

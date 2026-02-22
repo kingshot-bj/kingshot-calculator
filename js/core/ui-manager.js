@@ -371,6 +371,16 @@ class UIManager {
         const o = document.createElement('option');
         o.value = opt.value;
         o.textContent = opt.label;
+        
+        // レアリティに基づいて色を設定
+        if (opt.rarity && window.RARITY_COLORS) {
+          const colors = window.RARITY_COLORS[opt.rarity];
+          if (colors) {
+            o.style.backgroundColor = colors.bg;
+            o.style.color = colors.text;
+          }
+        }
+        
         input.appendChild(o);
       });
 

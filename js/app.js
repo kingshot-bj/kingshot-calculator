@@ -15,6 +15,11 @@ class LordGearApp {
 
     console.log('Initializing Lord Gear Calculator Pro...');
 
+    // レアリティカラーをグローバルに設定
+    if (typeof RARITY_COLORS !== 'undefined') {
+      window.RARITY_COLORS = RARITY_COLORS;
+    }
+
     // テーマ設定
     this.initTheme();
 
