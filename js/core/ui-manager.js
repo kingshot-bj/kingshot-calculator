@@ -367,21 +367,39 @@ class UIManager {
       input.className = 'form-control';
       input.dataset.fieldName = field.name;
 
+      // レアリティごとにグループ化
+      const rarityGroups = {};
       (field.options || []).forEach(opt => {
-        const o = document.createElement('option');
-        o.value = opt.value;
-        o.textContent = opt.label;
+        const rarity = opt.rarity || 'その他';
+        if (!rarityGroups[rarity]) {
+          rarityGroups[rarity] = [];
+        }
+        rarityGroups[rarity].push(opt);
+      });
+
+      // レアリティ順を維持
+      const rarityOrder = ['グッド', 'レア', 'エピック', 'レジェンド', '神話'];
+      rarityOrder.forEach(rarity => {
+        if (!rarityGroups[rarity]) return;
         
-        // レアリティに基づいて色を設定
-        if (opt.rarity && window.RARITY_COLORS) {
-          const colors = window.RARITY_COLORS[opt.rarity];
-          if (colors) {
-            o.style.backgroundColor = colors.bg;
-            o.style.color = colors.text;
-          }
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = rarity;
+        
+        // optgroupのスタイルを設定
+        if (window.RARITY_COLORS && window.RARITY_COLORS[rarity]) {
+          const colors = window.RARITY_COLORS[rarity];
+          optgroup.style.backgroundColor = colors.bg;
+          optgroup.style.color = colors.text;
         }
         
-        input.appendChild(o);
+        rarityGroups[rarity].forEach(opt => {
+          const o = document.createElement('option');
+          o.value = opt.value;
+          o.textContent = opt.label;
+          optgroup.appendChild(o);
+        });
+        
+        input.appendChild(optgroup);
       });
 
       if (field.default !== undefined && field.default !== null) {
