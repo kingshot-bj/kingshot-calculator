@@ -66,19 +66,40 @@ const EQUIPMENT_PARTS = [
   { id: 'staff', label: '杖' },
 ];
 
+// グループ化された選択肢を生成（モバイル表示用）
+const createGroupedOptions = () => {
+  const options = [];
+  const groups = [
+    { name: 'グッド', prefix: 'グッド' },
+    { name: 'レア', prefix: 'レア' },
+    { name: 'エピック', prefix: 'エピック' },
+    { name: 'レジェンド', prefix: 'レジェンド' },
+    { name: '神話', prefix: '神話' },
+  ];
+  
+  groups.forEach(group => {
+    EQUIPMENT_MASTER.filter(m => m.key.startsWith(group.prefix)).forEach(item => {
+      options.push({ value: item.id, label: item.key });
+    });
+  });
+  
+  return options;
+};
+
 // フィールド定義
+const groupedOptions = createGroupedOptions();
 const EQUIPMENT_FIELDS = EQUIPMENT_PARTS.flatMap(part => [
   {
     name: `${part.id}_current`,
     label: `${part.label} - 現在`,
     type: 'select',
-    options: EQUIPMENT_MASTER.map(m => ({ value: m.id, label: m.key })),
+    options: groupedOptions,
   },
   {
     name: `${part.id}_target`,
     label: `${part.label} - 目標`,
     type: 'select',
-    options: EQUIPMENT_MASTER.map(m => ({ value: m.id, label: m.key })),
+    options: groupedOptions,
   },
 ]).concat([
   { name: 'have_silk', label: '所持献上品の絹', type: 'number', default: 0 },
