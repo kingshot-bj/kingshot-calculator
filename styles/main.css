@@ -123,11 +123,38 @@ body {
   margin: auto;
 }
 
-/* フォームフィールドを縦2列に */
-.form-fields {
+/* フォームフィールドを縦2列に（装備計算用） */
+#form-equipment .form-fields {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+}
+
+/* 宝石計算用：3列レイアウト */
+#form-jewel .form-fields {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 1fr !important;
+  gap: 10px !important;
+}
+
+/* デフォルト：1列 */
+.form-fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+/* モバイル対応：600px以下でも2列を維持 */
+@media (max-width: 600px) {
+  #form-equipment .form-fields {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  
+  #form-jewel .form-fields {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px;
+  }
 }
 
 .layout-left {
@@ -194,6 +221,19 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+}
+
+/* モバイル対応：一括設定を1列に */
+@media (max-width: 600px) {
+  .batch-inputs {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .batch-button-group {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
 }
 
 .batch-input-group {
