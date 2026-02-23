@@ -174,10 +174,54 @@ body {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
   color: white;
   padding: 20px;
+  border-radius: var(--radius);
 }
 
-.batch-set-panel label {
+.batch-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.batch-controls h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
   color: white;
+}
+
+.batch-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.batch-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.batch-input-group label {
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.batch-input-group .form-control {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.95);
+  font-size: 0.95rem;
+}
+
+.batch-button-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 8px;
 }
 
 .batch-set-panel select,
