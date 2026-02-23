@@ -367,40 +367,53 @@ class UIManager {
       input.className = 'form-control';
       input.dataset.fieldName = field.name;
 
-      // レアリティごとにグループ化
-      const rarityGroups = {};
-      (field.options || []).forEach(opt => {
-        const rarity = opt.rarity || 'その他';
-        if (!rarityGroups[rarity]) {
-          rarityGroups[rarity] = [];
-        }
-        rarityGroups[rarity].push(opt);
-      });
+      // レアリティがある場合はグループ化、ない場合は通常のオプション
+      const hasRarity = (field.options || []).some(opt => opt.rarity);
+      
+      if (hasRarity) {
+        // レアリティごとにグループ化
+        const rarityGroups = {};
+        (field.options || []).forEach(opt => {
+          const rarity = opt.rarity || 'その他';
+          if (!rarityGroups[rarity]) {
+            rarityGroups[rarity] = [];
+          }
+          rarityGroups[rarity].push(opt);
+        });
 
-      // レアリティ順を維持
-      const rarityOrder = ['グッド', 'レア', 'エピック', 'レジェンド', '神話'];
-      rarityOrder.forEach(rarity => {
-        if (!rarityGroups[rarity]) return;
-        
-        const optgroup = document.createElement('optgroup');
-        optgroup.label = rarity;
-        
-        // optgroupのスタイルを設定
-        if (window.RARITY_COLORS && window.RARITY_COLORS[rarity]) {
-          const colors = window.RARITY_COLORS[rarity];
-          optgroup.style.backgroundColor = colors.bg;
-          optgroup.style.color = colors.text;
-        }
-        
-        rarityGroups[rarity].forEach(opt => {
+        // レアリティ順を維持
+        const rarityOrder = ['グッド', 'レア', 'エピック', 'レジェンド', '神話'];
+        rarityOrder.forEach(rarity => {
+          if (!rarityGroups[rarity]) return;
+          
+          const optgroup = document.createElement('optgroup');
+          optgroup.label = rarity;
+          
+          // optgroupのスタイルを設定
+          if (window.RARITY_COLORS && window.RARITY_COLORS[rarity]) {
+            const colors = window.RARITY_COLORS[rarity];
+            optgroup.style.backgroundColor = colors.bg;
+            optgroup.style.color = colors.text;
+          }
+          
+          rarityGroups[rarity].forEach(opt => {
+            const o = document.createElement('option');
+            o.value = opt.value;
+            o.textContent = opt.label;
+            optgroup.appendChild(o);
+          });
+          
+          input.appendChild(optgroup);
+        });
+      } else {
+        // レアリティがない場合は通常のオプション
+        (field.options || []).forEach(opt => {
           const o = document.createElement('option');
           o.value = opt.value;
           o.textContent = opt.label;
-          optgroup.appendChild(o);
+          input.appendChild(o);
         });
-        
-        input.appendChild(optgroup);
-      });
+      }
 
       if (field.default !== undefined && field.default !== null) {
         input.value = field.default;

@@ -37,16 +37,36 @@
 
     <!-- メインコンテンツ -->
     <main class="main-content">
+      <!-- 上部広告 -->
+      <div class="ad-container" id="ad-top">
+        <div class="ad-placeholder">広告スペース（728x90）</div>
+      </div>
+
       <div class="container-layout">
         <!-- 左側：計算フォーム -->
         <div class="layout-left">
           <!-- 計算ツールのコンテンツ -->
           <div id="calculator-content"></div>
+          
+          <!-- 中部広告 -->
+          <div class="ad-container" id="ad-middle">
+            <div class="ad-placeholder">広告スペース（300x250）</div>
+          </div>
         </div>
         <!-- 右側：計算結果 -->
         <div class="layout-right">
           <!-- 計算結果はここに表示される -->
+          
+          <!-- サイド広告 -->
+          <div class="ad-container" id="ad-side">
+            <div class="ad-placeholder">広告スペース（300x600）</div>
+          </div>
         </div>
+      </div>
+      
+      <!-- 下部広告 -->
+      <div class="ad-container" id="ad-bottom">
+        <div class="ad-placeholder">広告スペース（728x90）</div>
       </div>
     </main>
 
@@ -66,6 +86,30 @@
       <p>&copy; 2026 Lord Gear Calculator Pro | キングショット装備計算ツール</p>
     </footer>
   </div>
+
+  <!-- Google AdSense -->
+  <!-- 注意：Google AdSenseコードを設定してください -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-xxxxxxxxxxxxxxxx"
+     crossorigin="anonymous"></script> -->
+
+  <!-- 広告スクリプト -->
+  <script>
+    // Google AdSense設定用スクリプト
+    window.adConfig = {
+      topAd: 'ad-top',
+      middleAd: 'ad-middle',
+      sideAd: 'ad-side',
+      bottomAd: 'ad-bottom'
+    };
+
+    // Google AdSenseを設定した場合、以下のコードを実行してください：
+    /*
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-xxxxxxxxxxxxxxxx",
+      enable_page_level_ads: true
+    });
+    */
+  </script>
 
   <!-- スクリプト -->
   <script src="js/core/calculator-engine.js"></script>
