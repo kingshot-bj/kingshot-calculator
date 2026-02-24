@@ -525,6 +525,7 @@ class UIManager {
 
     // ラベルマッピング
     const labelMap = {
+      // 装備計算用
       needSilk: '必要献上品の絹',
       needThread: '必要金の糸',
       needBP: '必要設計図',
@@ -533,6 +534,11 @@ class UIManager {
       lackThread: '不足金の糸',
       lackBP: '不足設計図',
       isSufficient: '素材充足',
+      // 宝石計算用
+      needGuides: '必要ハンドブック',
+      needDesigns: '必要図面',
+      lackGuides: '不足ハンドブック',
+      lackDesigns: '不足図面',
     };
 
     const html = `
